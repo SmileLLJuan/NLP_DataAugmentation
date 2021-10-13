@@ -4,7 +4,7 @@
 # @Author  : lilijuan
 # @File    : api_test.py
 from flask import Flask,request
-from codes.Text_Synonyms import SynonymsGenerator
+from codes.text_Synonyms import SynonymsGenerator
 import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(level='INFO')

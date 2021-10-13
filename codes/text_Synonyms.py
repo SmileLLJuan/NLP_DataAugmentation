@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2021/9/26 10:22
 # @Author  : lilijuan
-# @File    : Text_Synonyms.py
+# @File    : text_Synonyms.py
 
 import os,json,re
 import numpy as np
