@@ -1,0 +1,7 @@
+EDA：随机替换，随机删除，随机插入，随机交换
+依赖包：synonyms & jieba 都放在的程序中（因为synonyms初始化会自动下载word2vec文件，可能会报错;synonyms放在程序中可以对代码进行修改）
+
+NLP_DataAugmentation/codes/synonyms/data/words.vector.gz 文件下载地址：https://github.com/chatopera/Synonyms/releases/download/3.15.0/words.vector.gz
+
+参考文献：
+[1] https://github.com/zhanlaoban/EDA_NLP_for_Chinese
