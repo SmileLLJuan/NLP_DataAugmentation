@@ -91,3 +91,6 @@ class HybridSim():
 
         print('对不起，词语可能未收录，无法计算相似度！')
         return -1
+if __name__ == '__main__':
+    word_similarity=HybridSim()
+    print(word_similarity.get_Final_sim("国王", "王后"))

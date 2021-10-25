@@ -5,6 +5,7 @@
 # under MIT License
 
 import math
+import os
 
 class CilinSimilarity(object):
     """
@@ -29,6 +30,7 @@ class CilinSimilarity(object):
         self.word_code = {}
         self.vocab = set()
         self.N = 0
+        self.file =os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),'./cilin.txt'))
         self.read_cilin()
 
     def read_cilin(self):
@@ -37,7 +39,8 @@ class CilinSimilarity(object):
         单词为key，编码为value，保存在self.word_code
         所有单词保存在self.vocab
         """
-        with open('./cilin.txt', 'r', encoding='gbk') as f:
+
+        with open(self.file, 'r', encoding='gbk') as f:
             for line in f.readlines():
                 res = line.split()
                 code = res[0]

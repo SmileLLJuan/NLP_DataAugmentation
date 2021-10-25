@@ -7,7 +7,7 @@
 单纯在词林范围内，在MC30上的皮尔逊系数达到了论文标称的0.856
 @DateTime: Created on 2018/2/28, at 下午 14:48 by PyCharm
 '''
-
+import os
 
 class CilinSimilarity(object):
     """    基于哈工大同义词词林扩展版计算语义相似度    """
@@ -23,6 +23,8 @@ class CilinSimilarity(object):
         self.code_word = {}
         self.word_code = {}
         self.vocab = set()
+        self.file =os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),'./cilin.txt'))
+
         self.read_cilin()
 
     def read_cilin(self):
@@ -31,7 +33,7 @@ class CilinSimilarity(object):
         单词为key，编码群为value，保存在self.word_code
         所有单词保存在self.vocab
         """
-        with open('./cilin.txt', 'r', encoding='gbk') as f:
+        with open(self.file , 'r', encoding='gbk') as f:
             for line in f.readlines():
                 res = line.split()
                 code = res[0]  # 词义编码

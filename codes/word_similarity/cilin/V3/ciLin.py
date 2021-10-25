@@ -8,6 +8,7 @@
 【1】彭琦, 朱新华, 陈意山,等. 基于信息内容的词林词语相似度计算[J]. 计算机应用研究, 2018(2):400-404.
 '''
 import math
+import os
 
 
 class CilinSimilarity(object):
@@ -23,7 +24,7 @@ class CilinSimilarity(object):
         self.code_word = {}
         self.word_code = {}
         self.vocab = set()
-        self.file = './new_cilin.txt'
+        self.file =os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),'./new_cilin.txt'))
         self.mydict = {}
         self.read_cilin()
 

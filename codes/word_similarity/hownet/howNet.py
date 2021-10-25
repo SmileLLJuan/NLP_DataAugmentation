@@ -11,7 +11,7 @@ Last updated: 2018年2月25日
 3，按Python风格改写后，省去了几个多余函数。可读性更好
 '''
 import math
-
+import os
 
 def parseZhAndEn(text):
     words = text.split('|')
@@ -135,8 +135,8 @@ class How_Similarity:
         self.sememetable_ = dict()  # 义原表
         self.sememeindex_zn_ = dict()  # 义原索引(中文)
         self.glossarytable_ = dict()  # 词汇表。
-        self.glossaryfile = './glossary.txt'
-        self.sememefile = './WHOLE.DAT'
+        self.glossaryfile =os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),'./glossary.txt'))
+        self.sememefile = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),'./WHOLE.DAT'))
         self.vocab = set()
         self.BETA = [0.5, 0.2, 0.17, 0.13]
         self.GAMA = 0.2
