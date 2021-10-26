@@ -28,7 +28,7 @@ if sys.version_info[0] < 3:
 else:
     xrange = range
 
-from .utils import smart_open, to_unicode, cosine
+from codes.synonyms.utils import smart_open, to_unicode, cosine
 from numpy import dot, zeros, dtype, float32 as REAL,\
     double, array, vstack, fromstring, sqrt, newaxis,\
     ndarray, sum as np_sum, prod, ascontiguousarray,\
@@ -209,7 +209,7 @@ class KeyedVectors():
         Returns the word's representations in vector space, as a 1D numpy array.
         If `use_norm` is True, returns the normalized word vector.
         Example::
-          >>> trained_model['office']
+          # >>> trained_model['office']
           array([ -1.40128313e-02, ...])
         """
         if word in self.vocab:
@@ -241,37 +241,3 @@ class KeyedVectors():
             scores[w] = min(s, 1.0)
         for x in sorted(words, key=scores.get, reverse=True):
             yield x, scores[x]
-
-import unittest
-
-# run testcase: python /Users/hain/tmp/ss Test.testExample
-
-
-class Test(unittest.TestCase):
-    '''
-
-    '''
-
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
-    def test_load_w2v_data(self):
-        _fin_wv_path = os.path.join(curdir, 'data', 'words.vector')
-        _fin_stopwords_path = os.path.join(curdir, 'data', 'stopwords.txt')
-        kv = KeyedVectors()
-        binary = True
-        kv.load_word2vec_format(
-            _fin_wv_path,
-            binary=binary,
-            unicode_errors='ignore')
-
-
-def test():
-    unittest.main()
-
-
-if __name__ == '__main__':
-    test()

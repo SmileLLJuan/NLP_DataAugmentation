@@ -21,11 +21,11 @@ class CilinSimilarity(object):
         'vocab' 所有不重复的单词，便于统计词汇总数。
         'mydict' 每个大中小类编码对应的下位节点数量。
         """
-        self.code_word = {}
-        self.word_code = {}
-        self.vocab = set()
+        self.code_word = {}  # {编码:[words]}  {'A': ['人'], 'Aa': ['人-泛称'], 'Ab': ['男女', '老少'],...
+        self.word_code = {}  #{'人': ['A', 'Aa01', 'Aa01A', 'Ab02B', 'Aa01A01=', 'Ab02B01=', 'Dd17A02=', 'De01B02=', 'Dn03A04='], '人-泛称': ['Aa'], ...
+        self.vocab = set()  # 保存所有词语
         self.file =os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),'./new_cilin.txt'))
-        self.mydict = {}
+        self.mydict = {}  #保存各个非叶子节点下分支 --直到节点的个数{'A': 9508, 'Aa': 448, 'Aa01': 198, ...
         self.read_cilin()
 
     def read_cilin(self):
@@ -131,6 +131,20 @@ class CilinSimilarity(object):
             return  (sum(simlist) - max(simlist)) / (len(simlist) - 1)
         else:
             return min(simlist)
+    def get_similar_words(self,word):
+        if word not in self.vocab:
+            print(word, '未被词林词林收录！')
+            return 0  # 如果有一个词不在词林中，则相似度为0
+        similar_words=[]
+
+        code1 = self.word_code[word]
+        for c1 in code1:
+            similar_words.extend(self.code_word[c1])
+        return list(set(similar_words))
+
+
 if __name__ == '__main__':
     word_similarity=CilinSimilarity()
+    similar_words=word_similarity.get_similar_words("国王")
+    print(similar_words)
     print(word_similarity.sim2018("国王","王后"))

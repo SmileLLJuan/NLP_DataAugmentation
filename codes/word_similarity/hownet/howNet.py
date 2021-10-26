@@ -62,8 +62,7 @@ class GlossaryElement:
                 self.solid = False
                 line = line[1:len(line) - 2]
 
-            sememes = items[2].split(',')
-
+            sememes = items[2].replace("\n","").split(',')
             if len(sememes) > 0:
                 firstdone = False
                 if sememes[0][0].isalpha():
@@ -81,7 +80,7 @@ class GlossaryElement:
                     equalpos = sememes[i].find('=')
                     if equalpos != -1:
                         key = sememes[i][0:equalpos]
-                        value = sememes[i][equalpos + 1]
+                        value = sememes[i][equalpos + 1:]
                         if len(value) > 0 and value[0] != '(':
                             value, defaultText = parseZhAndEn(value)
                         self.s_relation[key] = value
@@ -95,6 +94,7 @@ class GlossaryElement:
                         continue
                     self.s_other.append(sememes[i])
             # self.dump()
+            # print(items,self.word,self.s_first,self.s_other,self.s_symbol,self.s_relation)
             return True
         return False
 
@@ -132,12 +132,12 @@ def valuesOfGlossarytable_(glossarytable_, word):
 class How_Similarity:
 
     def __init__(self):
-        self.sememetable_ = dict()  # 义原表
-        self.sememeindex_zn_ = dict()  # 义原索引(中文)
-        self.glossarytable_ = dict()  # 词汇表。
+        self.sememetable_ = dict()  # 义原表 {'0': <__main__.SememeElement object at 0x7f7c5432b898>, '1': <__main__.SememeElement object at 0x7f7c5432b8d0>,...
+        self.sememeindex_zn_ = dict()  # 义原索引(中文) {'事件': <__main__.SememeElement object at 0x7f7c54397ef0>, '静态': <__main__.SememeElement object at 0x7f7c5432b8d0>,...
+        self.glossarytable_ = dict()  # 词汇表。{'0\t\ufeff1': <__main__.GlossaryElement object at 0x7f7c54c51278>, '1\t2': <__main__.GlossaryElement object at 0x7f7c54c51358>,...
         self.glossaryfile =os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),'./glossary.txt'))
         self.sememefile = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),'./WHOLE.DAT'))
-        self.vocab = set()
+        self.vocab = set()  #所有词语 53336个
         self.BETA = [0.5, 0.2, 0.17, 0.13]
         self.GAMA = 0.2
         self.DELTA = 0.2
@@ -302,8 +302,7 @@ class How_Similarity:
             for j in range(len(w2.s_other)):
                 temp = 0.0
                 if w1.s_other[i][0] != '(' and w2.s_other[j][0] != '(':
-                    temp = self.calcSememeSim(w1.s_other[i], w2.s_other[j])
-
+                    temp = self.calcSememeSim(w1.s_other[i].split("|")[1], w2.s_other[j].split("|")[1])
                 elif w1.s_other[i][0] == '(' and w2.s_other[j][0] == '(':
                     if w1.s_other[i] == w2.s_other[j]:
                         temp = 1.0
@@ -414,4 +413,4 @@ class How_Similarity:
 if __name__ == '__main__':
     word_similarity=How_Similarity()
     print(word_similarity.calc("国王", "王后"))
-    print(word_similarity.calc("国王", "王国"))
+    print(word_similarity.calc("果腹", "过冬"))
