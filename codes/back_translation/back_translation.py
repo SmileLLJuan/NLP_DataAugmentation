@@ -41,6 +41,7 @@ def baidu_translate(word: str,fromLang:str,toLang:str) -> str:
 
     try:
         httpClient = http.client.HTTPConnection('api.fanyi.baidu.com')
+        httpClient = http.client.HTTPConnection('fanyi-api.baidu.com')
         httpClient.request('GET', myurl)
 
         # response是HTTPResponse对象

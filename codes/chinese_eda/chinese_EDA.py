@@ -11,7 +11,7 @@ from random import shuffle
 random.seed(2019)
 
 # 停用词列表，默认使用哈工大停用词表
-f = open('../data/stopwords/hit_stopwords.txt')
+f = open('../../data/stopwords/hit_stopwords.txt')
 stop_words = list()
 for stop_word in f.readlines():
     stop_words.append(stop_word[:-1])
@@ -143,22 +143,22 @@ def eda(sentence, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9)
     # 同义词替换sr
     for _ in range(num_new_per_technique):
         a_words = synonym_replacement(words, n_sr)
-        augmented_sentences.append(' '.join(a_words))
+        augmented_sentences.append(''.join(a_words))
 
     # 随机插入ri
     for _ in range(num_new_per_technique):
         a_words = random_insertion(words, n_ri)
-        augmented_sentences.append(' '.join(a_words))
+        augmented_sentences.append(''.join(a_words))
 
     # 随机交换rs
     for _ in range(num_new_per_technique):
         a_words = random_swap(words, n_rs)
-        augmented_sentences.append(' '.join(a_words))
+        augmented_sentences.append(''.join(a_words))
 
     # 随机删除rd
     for _ in range(num_new_per_technique):
         a_words = random_deletion(words, p_rd)
-        augmented_sentences.append(' '.join(a_words))
+        augmented_sentences.append(''.join(a_words))
 
     # print(augmented_sentences)
     shuffle(augmented_sentences)
@@ -172,12 +172,18 @@ def eda(sentence, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9)
     augmented_sentences.append(seg_list)
 
     return augmented_sentences
-
+def eda_get_synonyms(texts,alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9):
+    results=[]
+    for text in texts:
+        result_i=eda(text,alpha_sr, alpha_ri, alpha_rs, p_rd, num_aug)
+        results.append({"text":text,"similar_texts":result_i})
+    return {'code':200,'msg':'解析成功','result':results}
 if __name__ == '__main__':
     alpha=0.1
     num_aug=10
-    with open("../data/file_sysnomys_test", 'r', encoding='utf-8') as f:
+    with open("../../data/file_sysnomys_test", 'r', encoding='utf-8') as f:
         texts = f.readlines()
+    texts=['怎么开初婚未育证明','帮我关一下台灯','我想吃附近的火锅','我们一起去打羽毛球吧','把我的一个亿存银行安全吗','微信和支付宝哪个好？',]
     for text in texts:
         text = text.replace("\n", "")
         if len(text) > 2:

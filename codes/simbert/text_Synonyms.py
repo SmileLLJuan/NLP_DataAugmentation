@@ -116,6 +116,7 @@ class SynonymsGenerator(AutoRegressiveDecoder):
             synonyms_list=self.gen_text_synonyms(text,n,k,threhold)
             results[i]={"text":text,"synonyms":synonyms_list['synonyms']}
         return results
+
     def gen_file_synonyms(self, file, n=100, k=20, threhold=0.75):
         with open(file,'r',encoding='utf-8') as f:
             texts=f.readlines()
@@ -143,15 +144,18 @@ class SynonymsGenerator(AutoRegressiveDecoder):
 if __name__ == '__main__':
     model_path="/mnt/disk1/lilijuan/corpus/trained_bert_models/chinese_roformer-sim-char_L-6_H-384_A-6"
     model_path="/mnt/disk1/lilijuan/corpus/trained_bert_models/chinese_roformer-sim-char_L-12_H-768_A-12"
-    model_path="/mnt/disk1/lilijuan/corpus/trained_bert_models/chinese_simbert_L-12_H-768_A-12"
+    # model_path="/mnt/disk1/lilijuan/corpus/trained_bert_models/chinese_simbert_L-12_H-768_A-12"
     synonyms=SynonymsGenerator(model_path=model_path)
     # synonyms_result = synonyms.gen_file_synonyms(file="/mnt/disk1/lilijuan/HK/SimBERT/data/file_sysnomys_test", n=10, threhold=0.9)
     # print(synonyms_result)
-    synonyms_result = synonyms.gen_synonyms(texts="怎么开初婚未育证明", n=20, threhold=0.9)
+    synonyms_result = synonyms.gen_synonyms(texts="怎么开初婚未育证明", n=30, threhold=0.9)
     print(synonyms_result)
-    # texts=['帮我关一下台灯','我想吃附近的火锅','我们一起去打羽毛球吧','把我的一个亿存银行安全吗','微信和支付宝哪个好？',]
-    # synonyms_result= synonyms.gen_synonyms(texts=texts, n=10, threhold=0.9)
-    # print(synonyms_result)
-    # synonyms_result = synonyms.gen_synonyms(texts="/mnt/disk1/lilijuan/HK/SimBERT/data/file_sysnomys_test", n=10, threhold=0.9)
-    # print(synonyms_result)
+    texts=['怎么开初婚未育证明','帮我关一下台灯','我想吃附近的火锅','我们一起去打羽毛球吧','把我的一个亿存银行安全吗','微信和支付宝哪个好？',]
+    for text in texts:
+        text = text.replace("\n", "")
+        if len(text) > 2:
+            synonyms_result= synonyms.gen_synonyms(texts=text, n=10, threhold=0.9)
+            print(text, synonyms_result,"#"*20)
+            for t,s in synonyms_result['synonyms']:
+                print(t,s)
 

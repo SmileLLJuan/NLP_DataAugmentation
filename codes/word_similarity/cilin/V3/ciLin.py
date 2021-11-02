@@ -133,8 +133,8 @@ class CilinSimilarity(object):
             return min(simlist)
     def get_similar_words(self,word):
         if word not in self.vocab:
-            print(word, '未被词林词林收录！')
-            return 0  # 如果有一个词不在词林中，则相似度为0
+            # print(word, '未被词林词林收录！')
+            return []  # 如果有一个词不在词林中，则相似度为0
         similar_words=[]
 
         code1 = self.word_code[word]
